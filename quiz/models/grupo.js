@@ -5,7 +5,6 @@ module.exports = function(sequelize, DataTypes) {
 	{
 		tutor: {
 			type: DataTypes.STRING,
-			validate: {notEmpty: {msg: "->Falta Tutor"}}
 		},
 		anyo: {
 			type: DataTypes.STRING,

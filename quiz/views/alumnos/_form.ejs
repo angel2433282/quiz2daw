@@ -18,6 +18,20 @@
 <label for="email" class="rem">E-mail:</label>
 <input type="text" id="email" name="alumno[email]" value="<%= alumno.email %>" />
 </p>
+<p>
+<label for="GrupoId" class="rem">Grupo:</label>
+<select name="alumno[GrupoId]">
+	<%for(index in grupos){%>
+		<option value="<%= grupos[index].id %>"
+		<% if(grupos[index].id == alumno.GrupoId) {%>
+			selected
+		<% } %>
+		><%= grupos[index].grupo %> - <%= grupos[index].subgrupo %></option>
+	<%}%>
+	
+</select>
+<!-- <input type="text" id="GrupoId" name="alumno[GrupoId]" value="<%= alumno.GrupoId %>" /> -->
+</p>
 <a href="/admin/alumnos"><button type="button">Cancelar</button></a>
 
 <input type="submit" value="Guardar">

@@ -36,6 +36,9 @@ CuestionarioAsignado.belongsTo(Cuestionario, Alumno);
 Alumno.hasMany(CuestionarioAsignado);
 Cuestionario.hasMany(CuestionarioAsignado);
 
+Alumno.belongsTo(Grupo);
+Grupo.hasMany(Alumno);
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
@@ -70,7 +73,8 @@ sequelize.sync().then(function() {
 						apellido2: 'López',
 						nombre: 'Juan',
 						email: 'Juan@gmail.com',
-						userId: 2
+						userId: 2,
+                                                GrupoId: 1
 		});
             };
 	});

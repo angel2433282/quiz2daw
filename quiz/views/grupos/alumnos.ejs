@@ -4,7 +4,7 @@
 <% var i; for (i=0;i<alumnos.length;i++){ %>
 	<%if(session.user){%>
 		<td><%= alumnos[i].id %>-<%= alumnos[i].nombre %> <%= alumnos[i].apellido1 %> <%= alumnos[i].apellido2 %> - DNI: <%= alumnos[i].dni %></td>       
-<%}%>
+	<%}%>
 </tr>
 <% } %>
-</table>
+</table> 

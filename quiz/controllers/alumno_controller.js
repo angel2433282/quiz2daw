@@ -47,9 +47,9 @@ exports.index = function(req, res) {
 // GET /alumnos/new
 exports.new = function(req, res) {
 	var alumno = models.Alumno.build( //crea objeto alumno
-	{dni: "DNI", nombre: "Nombre", apellido1: "Apellido1", apellido2: "Apellido2", email: "E-mail"}
+	{dni: "DNI", nombre: "Nombre", apellido1: "Apellido1", apellido2: "Apellido2", email: "E-mail", GrupoId: "1"}
 	);
-    res.render('alumnos/new', {alumno: alumno});
+    res.render('alumnos/new', {alumno: alumno, grupos: req.grupos});
 };
 
 // POST /alumnos/create
@@ -63,7 +63,7 @@ exports.create = function(req, res) {
 			if(err) {
 			res.render('alumnos/new', {alumno: alumno, errors: err.errors});
 			} else {
-				alumno.save({fields: ["dni","nombre", "apellido1", "apellido2", "email"]}).then(function(){
+				alumno.save({fields: ["dni","nombre", "apellido1", "apellido2", "email", "GrupoId"]}).then(function(){
 					res.redirect('/admin/alumnos');
 				})	//Redireccion HTTP (URL relativo) lista de preguntas
 			}
@@ -71,9 +71,9 @@ exports.create = function(req, res) {
 	);
 };
 
-exports.edit = function(req, res) {
+exports.edit = function(req, res, next) {
     var alumno = req.alumno; //autoload de instancia de quiz
-    res.render('alumnos/edit', {alumno: alumno});
+	res.render('alumnos/edit', {alumno: alumno, grupos: req.grupos});
 };
 
 exports.update = function(req, res) {
@@ -82,6 +82,7 @@ exports.update = function(req, res) {
     req.alumno.apellido1 = req.body.alumno.apellido1;
     req.alumno.apellido2 = req.body.alumno.apellido2;
     req.alumno.email = req.body.alumno.email;
+    req.alumno.GrupoId = req.body.alumno.GrupoId;
     
     req.alumno
             .validate()
@@ -91,7 +92,7 @@ exports.update = function(req, res) {
                     res.render('alumnos/edit',{alumno: req.alumno});
                 }else{
                     req.alumno
-                            .save({fields:["dni","nombre","apellido1","apellido2","email"]})
+                            .save({fields:["dni","nombre","apellido1","apellido2","email", "GrupoId"]})
                             .then(function(){res.redirect('/admin/alumnos');});
                 }
             }

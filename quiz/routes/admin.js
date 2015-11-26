@@ -44,9 +44,9 @@ router.param('userId', userController.load);//autoload :userId
 
 //Alumnos
 router.get('/alumnos', 							sessionController.adminRequired, 	alumnoController.index); 
-router.get('/alumnos/new', 						sessionController.adminRequired, 	alumnoController.new);
+router.get('/alumnos/new', 						sessionController.adminRequired,	grupoController.cogerTodos, 	alumnoController.new);
 router.post('/alumnos/create', 					sessionController.adminRequired, 	alumnoController.create);
-router.get('/alumnos/:alumnoId(\\d+)/edit',     sessionController.adminRequired, 	alumnoController.edit);
+router.get('/alumnos/:alumnoId(\\d+)/edit',     sessionController.adminRequired, 	grupoController.cogerTodos,		alumnoController.edit);
 router.put('/alumnos/:alumnoId(\\d+)',          sessionController.adminRequired, 	alumnoController.update);
 router.delete('/alumnos/:alumnoId(\\d+)', 		sessionController.adminRequired, 	alumnoController.destroy);
 
@@ -66,7 +66,10 @@ router.post('/cuestionarios/create', sessionController.loginRequired, cuestionar
 //Grupos
 router.get('/grupos', 							sessionController.adminRequired,	grupoController.index);
 router.get('/grupos/:grupoId(\\d+)', 												grupoController.show);
+router.get('/grupos/new', 						sessionController.adminRequired, 	grupoController.new);
+router.post('/grupos/create', 					sessionController.adminRequired, 	grupoController.create);
 router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
+router.get('/grupos/:grupoId(\\d+)/alumnos',    sessionController.adminRequired, 	grupoController.alumnos);
 router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
 router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
 
