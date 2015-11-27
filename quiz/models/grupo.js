@@ -26,6 +26,9 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		horarioVisita: {
 			type: DataTypes.STRING
+		},
+                CuestionarioId: {
+			type: DataTypes.INTEGER
 		}
 	});
 }

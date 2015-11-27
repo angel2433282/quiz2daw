@@ -1,0 +1,10 @@
+<h3>Listado de Grupos</h3><br/>
+
+<table>
+<% var i; for (i=0;i<grupos.length;i++){ %>
+	<%if(session.user){%>
+		<td><%= grupos[i].curso %>-<%= grupos[i].grupo %>-<%= grupos[i].subgrupo %></td>       
+	<%}%>
+</tr>
+<% } %>
+</table> 

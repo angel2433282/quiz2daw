@@ -63,16 +63,17 @@ router.delete('/cuestionarios/:cuestionarioId(\\d+)', sessionController.loginReq
 router.get('/cuestionarios/new',sessionController.loginRequired, cuestionarioController.new);
 router.post('/cuestionarios/create', sessionController.loginRequired, cuestionarioController.create);
 router.get('/cuestionarios/:cuestionarioId(\\d+)/preguntas',    sessionController.adminRequired, 	cuestionarioController.preguntas);
+router.get('/cuestionarios/:cuestionarioId(\\d+)/grupos',    sessionController.adminRequired, 	cuestionarioController.grupos);
 
 //Grupos
-router.get('/grupos', 							sessionController.adminRequired,	grupoController.index);
-router.get('/grupos/:grupoId(\\d+)', 												grupoController.show);
-router.get('/grupos/new', 						sessionController.adminRequired, 	grupoController.new);
-router.post('/grupos/create', 					sessionController.adminRequired, 	grupoController.create);
-router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
-router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
-router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
-router.get('/grupos/:grupoId(\\d+)/alumnos',    sessionController.adminRequired, 	grupoController.alumnos);
+router.get('/grupos',                           sessionController.adminRequired,	grupoController.index);
+router.get('/grupos/:grupoId(\\d+)', 		grupoController.show);
+router.get('/grupos/new', 			sessionController.adminRequired,    cuestionarioController.cogerGrupos, 	grupoController.new);
+router.post('/grupos/create', 			sessionController.adminRequired,    grupoController.create);
+router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired,    cuestionarioController.cogerGrupos, 	grupoController.edit);
+router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired,    grupoController.update);
+router.delete('/grupos/:grupoId(\\d+)', 	sessionController.adminRequired,    grupoController.destroy);
+router.get('/grupos/:grupoId(\\d+)/alumnos',    sessionController.adminRequired,    grupoController.alumnos);
 
 //Materias
 router.get('/materias', materiaController.index);

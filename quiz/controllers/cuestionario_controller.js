@@ -93,7 +93,7 @@ exports.cogerTodos = function(req, res, next) {
 	).catch(function(error){next(error);})
 };
 
-//Muestra los alumnos de un grupo
+//Muestra las preguntas de un cuestionario
 exports.preguntas = function(req, res, next) {
 	models.Quiz.findAll({
 		where : {
@@ -102,6 +102,29 @@ exports.preguntas = function(req, res, next) {
 	}).then(
 		function(quizes){
 			res.render('cuestionarios/preguntas.ejs', {quizes: quizes});
+		}
+	).catch(function(error){next(error);})
+};
+
+//listar grupos asignados al cuestionario
+exports.cogerGrupos = function(req, res, next) {
+	models.Cuestionario.findAll().then(
+		function(grupos){
+			req.grupos = grupos;
+			next();
+		}
+	).catch(function(error){next(error);})
+};
+
+//Muestra los grupos de un cuestionario
+exports.grupos = function(req, res, next) {
+	models.Grupo.findAll({
+		where : {
+			CuestionarioId : Number(req.cuestionario.id)		
+		}
+	}).then(
+		function(grupos){
+			res.render('cuestionarios/grupos.ejs', {grupos: grupos});
 		}
 	).catch(function(error){next(error);})
 };

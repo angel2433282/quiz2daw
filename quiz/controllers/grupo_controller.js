@@ -47,6 +47,7 @@ exports.update=function(req,res){
     req.grupo.ensenanza = req.body.grupo.ensenanza;
     req.grupo.curso = req.body.grupo.curso;
     req.grupo.horarioVisita = req.body.grupo.horarioVisita;
+    req.grupo.CuestionarioId = req.body.grupo.CuestionarioId;
 
     req.grupo
             .validate()
@@ -56,7 +57,7 @@ exports.update=function(req,res){
                 res.render('grupos/edit', {grupo: req.grupo, errors: err.errors});
             }else  {
                 req.grupo
-                        .save({fields:["tutor", "anyo", "grupo", "subgrupo", "ensenanza", "curso", "horarioVisita"]})
+                        .save({fields:["tutor", "anyo", "grupo", "subgrupo", "ensenanza", "curso", "horarioVisita", "CuestionarioId"]})
                         .then(function(){res.redirect('/admin/grupos/');});
             }
         }
@@ -76,7 +77,7 @@ exports.destroy = function(req, res) {
 exports.new = function(req, res) {
 	var grupo = models.Grupo.build( //crea objeto grupo
 		{
-			anyo: "2015/16", grupo: "1ºESO", subgrupo: "A", ensenanza: "E.S.O.", curso: "1"
+			anyo: "2015/16", grupo: "1ºESO", subgrupo: "A", ensenanza: "E.S.O.", curso: "1", CuestionarioId: "1"
 		}
 	);
     res.render('grupos/new', {grupo: grupo});
@@ -91,7 +92,7 @@ exports.create = function(req, res) {
 			if(err) {
 			res.render('grupos/new', {grupo: grupo, errors: err.errors});
 			} else {
-				grupo.save({fields: ["anyo", "grupo", "subgrupo", "ensenanza", "curso"]}).then(function(){
+				grupo.save({fields: ["anyo", "grupo", "subgrupo", "ensenanza", "curso", "CuestionarioId"]}).then(function(){
 					res.redirect('/admin/grupos');
 				})	//Redireccion HTTP (URL relativo) lista de cuestionarios
 			}

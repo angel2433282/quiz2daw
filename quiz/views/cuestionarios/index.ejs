@@ -18,7 +18,8 @@
         <%if(session.user){%>
         <td><a href="/admin/cuestionarios/<%= cuestionarios[i].id %>/edit"><button>editar</button></a></td>
         <td><a href="/admin/cuestionarios/<%= cuestionarios[i].id %>/preguntas"><button>preguntas</button></a></td>
-	<td>
+	<td><a href="/admin/cuestionarios/<%= cuestionarios[i].id %>/grupos"><button>grupos</button></a></td>
+        <td>
         <form method="post" action="/admin/cuestionarios/<%= cuestionarios[i].id %>?_method=delete">
         <button type="submit" onClick="return confirm('Borrar: <% cuestionarios[i].observaciones %>');">Borrar</button>
         </form>

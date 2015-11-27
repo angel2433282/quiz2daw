@@ -45,6 +45,9 @@ Grupo.hasMany(Alumno);
 Quiz.belongsTo(Cuestionario);
 Cuestionario.hasMany(Quiz);
 
+Grupo.belongsTo(Cuestionario);
+Cuestionario.hasMany(Grupo);
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
