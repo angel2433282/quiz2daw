@@ -82,3 +82,26 @@ exports.create = function(req, res) {
 		}
 	);
 };
+
+//listar preguntas asignadas al cuestionario
+exports.cogerTodos = function(req, res, next) {
+	models.Cuestionario.findAll().then(
+		function(quizes){
+			req.quizes = quizes;
+			next();
+		}
+	).catch(function(error){next(error);})
+};
+
+//Muestra los alumnos de un grupo
+exports.preguntas = function(req, res, next) {
+	models.Quiz.findAll({
+		where : {
+			CuestionarioId : Number(req.cuestionario.id)		
+		}
+	}).then(
+		function(quizes){
+			res.render('cuestionarios/preguntas.ejs', {quizes: quizes});
+		}
+	).catch(function(error){next(error);})
+};

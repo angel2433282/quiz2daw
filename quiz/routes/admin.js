@@ -62,6 +62,7 @@ router.put('/cuestionarios/:cuestionarioId(\\d+)', sessionController.loginRequir
 router.delete('/cuestionarios/:cuestionarioId(\\d+)', sessionController.loginRequired, cuestionarioController.destroy);
 router.get('/cuestionarios/new',sessionController.loginRequired, cuestionarioController.new);
 router.post('/cuestionarios/create', sessionController.loginRequired, cuestionarioController.create);
+router.get('/cuestionarios/:cuestionarioId(\\d+)/preguntas',    sessionController.adminRequired, 	cuestionarioController.preguntas);
 
 //Grupos
 router.get('/grupos', 							sessionController.adminRequired,	grupoController.index);
@@ -69,9 +70,9 @@ router.get('/grupos/:grupoId(\\d+)', 												grupoController.show);
 router.get('/grupos/new', 						sessionController.adminRequired, 	grupoController.new);
 router.post('/grupos/create', 					sessionController.adminRequired, 	grupoController.create);
 router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
-router.get('/grupos/:grupoId(\\d+)/alumnos',    sessionController.adminRequired, 	grupoController.alumnos);
 router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
 router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
+router.get('/grupos/:grupoId(\\d+)/alumnos',    sessionController.adminRequired, 	grupoController.alumnos);
 
 //Materias
 router.get('/materias', materiaController.index);
@@ -93,9 +94,9 @@ router.delete('/observaciones/:observacionId(\\d+)', sessionController.adminRequ
 router.get('/quizes', quizController.index);
 router.get('/quizes/:quizId(\\d+)', quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
-router.get('/quizes/new', sessionController.loginRequired, quizController.new);
+router.get('/quizes/new', sessionController.loginRequired, quizController.new, cuestionarioController.cogerTodos);
 router.post('/quizes/create', sessionController.loginRequired, quizController.create);
-router.get('/quizes/:quizId(\\d+)/edit', sessionController.loginRequired, quizController.edit);
+router.get('/quizes/:quizId(\\d+)/edit', sessionController.loginRequired, cuestionarioController.cogerTodos,quizController.edit);
 router.put('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.update);
 router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.destroy);
 

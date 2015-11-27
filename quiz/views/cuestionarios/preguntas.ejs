@@ -1,0 +1,10 @@
+<h3>Listado de Preguntas</h3><br/>
+
+<table>
+<% var i; for (i=0;i<quizes.length;i++){ %>
+	<%if(session.user){%>
+		<td><%= quizes[i].pregunta %>-<%= quizes[i].respuesta %></td>       
+	<%}%>
+</tr>
+<% } %>
+</table> 

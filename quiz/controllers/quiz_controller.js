@@ -27,8 +27,6 @@ exports.show = function(req, res) {
 };
 
 
-
-
 // GET /quizes/:id/answer
 exports.answer = function(req, res) {
 
@@ -42,7 +40,7 @@ exports.answer = function(req, res) {
 // GET /quizes/new
 exports.new = function(req, res) {
 	var quiz = models.Quiz.build( //crea objeto quiz
-	{pregunta: "Pregunta", respuesta: "Respuesta"}
+	{pregunta: "Pregunta", respuesta: "Respuesta", CuestionarioId: "1"}
 	);
     res.render('quizes/new', {quiz: quiz});
 };
@@ -58,7 +56,7 @@ exports.create = function(req, res) {
 			if(err) {
 			res.render('quizes/new', {quiz: quiz, errors: err.errors});
 			} else {
-				quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
+				quiz.save({fields: ["pregunta", "respuesta", "CuestionarioId"]}).then(function(){
 					res.redirect('/admin/quizes');
 				})	//Redireccion HTTP (URL relativo) lista de preguntas
 			}
@@ -75,6 +73,7 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
     req.quiz.pregunta = req.body.quiz.pregunta;
     req.quiz.respuesta = req.body.quiz.respuesta;
+    req.quiz.CuestionarioId = req.body.quiz.CuestionarioId;
     
     req.quiz
             .validate()
@@ -84,7 +83,7 @@ exports.update = function(req, res) {
                     res.render('quizes/edit',{quiz: req.quiz});
                 }else{
                     req.quiz
-                            .save({fields:["pregunta","respuesta"]})
+                            .save({fields:["pregunta","respuesta","CuestionarioId"]})
                             .then(function(){res.redirect('/admin/quizes');});
                 }
             }

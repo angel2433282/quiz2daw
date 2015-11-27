@@ -19,16 +19,19 @@ var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 var User = sequelize.import(path.join(__dirname, 'user'));
 
-
+//1:m (no concreto)
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
+//n:m
 Profesor.belongsTo(User, {foreignKey:'userId'});
 Alumno.belongsTo(User, {foreignKey:'userId'});
 
+//1:m (concreto)
 Grupo.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Grupo);
 
+//1:m (concreto)
 Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Cuestionario);
 
@@ -38,6 +41,9 @@ Cuestionario.hasMany(CuestionarioAsignado);
 
 Alumno.belongsTo(Grupo);
 Grupo.hasMany(Alumno);
+
+Quiz.belongsTo(Cuestionario);
+Cuestionario.hasMany(Quiz);
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
@@ -56,16 +62,17 @@ sequelize.sync().then(function() {
 
 	Quiz.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
-		Quiz.create({ pregunta: 'Capital de Italia' ,
+		Quiz.create({ pregunta: 'Capital de Italia',
 					  respuesta: 'Roma'
 		});
-		Quiz.create({ pregunta: 'Capital de Portugal' ,
+		Quiz.create({ pregunta: 'Capital de Portugal',
 					  respuesta: 'Lisboa'
 		})
 		.then(function(){console.log('Tabla Quiz inicializada')});
 		};
 	
 	});
+        
 	Alumno.count().then(function(count) {
             if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
@@ -73,12 +80,11 @@ sequelize.sync().then(function() {
 						apellido2: 'López',
 						nombre: 'Juan',
 						email: 'Juan@gmail.com',
-						userId: 2,
-                                                GrupoId: 1
+						userId: 2
 		});
             };
 	});
-
+                
 	Profesor.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Profesor.create({ apellidos: 'Sierra Olmo' ,
@@ -87,7 +93,7 @@ sequelize.sync().then(function() {
 			  dni: '12345678E',
 			  movil: '699699699',
 			  departamento: 'Informatica',
-			  userId: 1,
+			  userId: 1
 		})
 		.then(function(){console.log('Tabla Profesor inicializada')});
 		};
