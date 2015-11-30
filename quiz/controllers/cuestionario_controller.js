@@ -130,7 +130,7 @@ exports.grupos = function(req, res, next) {
 };
 
 //Duplicar cuestionario
-exports.duplicar = function(req, res) {
+exports.duplicar = function(req, res, next) {
         var nuevo = models.Cuestionario.build();
 	nuevo.set('creador',req.session.profesor.id);
         nuevo.set('observaciones',req.cuestionario.observaciones);
@@ -141,11 +141,25 @@ exports.duplicar = function(req, res) {
 			if(err) {
 			res.render('cuestionarios', {nuevo: nuevo, errors: err.errors});
 			} else {
-				for(prop in nuevo.dataValues) {console.log(prop + ' - ' + nuevo[prop])};
 				nuevo.save({fields: ["fechaFin", "observaciones", "creador"]}).then(function(){
-					res.redirect('/admin/cuestionarios');
-				})	//Redireccion HTTP (URL relativo) lista de cuestionarios
-			}
+                            models.Quiz.findAll({
+                                where : {
+                                        CuestionarioId : Number(req.cuestionario.id)		
+                                }
+                                }).then(
+                                function(quizes){
+                                    for (var i = 0 ;i < quizes.length ; i++){
+                                        var pregunta = models.Quiz.build();
+                                        pregunta.set('CuestionarioId',nuevo.id);
+                                        pregunta.set('pregunta',quizes[i].pregunta);
+                                        pregunta.set('respuesta',quizes[i].respuesta);
+                                        pregunta.validate();
+                                        pregunta.save({fields: ["pregunta", "respuesta", "CuestionarioId"]}).then(function(){
+                                            res.redirect('/admin/cuestionarios');
+                                        }).catch(function(error){next(error);})
+                                    }
+                                }).catch(function(error){next(error);})
+                        }).catch(function(error){next(error);})
 		}
-	);
+            }).catch(function(error){next(error);})
 };
