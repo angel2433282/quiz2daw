@@ -128,3 +128,24 @@ exports.grupos = function(req, res, next) {
 		}
 	).catch(function(error){next(error);})
 };
+
+//Duplicar cuestionario
+exports.duplicar = function(req, res) {
+        var nuevo = models.Cuestionario.build();
+	nuevo.set('creador',req.session.profesor.id);
+        nuevo.set('observaciones',req.cuestionario.observaciones);
+        nuevo.set('fechaFin',req.cuestionario.fechaFin);
+	nuevo.validate()
+	.then(
+		function(err){
+			if(err) {
+			res.render('cuestionarios', {nuevo: nuevo, errors: err.errors});
+			} else {
+				for(prop in nuevo.dataValues) {console.log(prop + ' - ' + nuevo[prop])};
+				nuevo.save({fields: ["fechaFin", "observaciones", "creador"]}).then(function(){
+					res.redirect('/admin/cuestionarios');
+				})	//Redireccion HTTP (URL relativo) lista de cuestionarios
+			}
+		}
+	);
+};

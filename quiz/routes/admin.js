@@ -64,6 +64,7 @@ router.get('/cuestionarios/new',sessionController.loginRequired, cuestionarioCon
 router.post('/cuestionarios/create', sessionController.loginRequired, cuestionarioController.create);
 router.get('/cuestionarios/:cuestionarioId(\\d+)/preguntas',    sessionController.adminRequired, 	cuestionarioController.preguntas);
 router.get('/cuestionarios/:cuestionarioId(\\d+)/grupos',    sessionController.adminRequired, 	cuestionarioController.grupos);
+router.post('/cuestionarios/:cuestionarioId(\\d+)/duplicar', sessionController.loginRequired, cuestionarioController.duplicar);
 
 //Grupos
 router.get('/grupos',                           sessionController.adminRequired,	grupoController.index);
