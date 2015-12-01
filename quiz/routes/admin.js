@@ -62,8 +62,8 @@ router.put('/cuestionarios/:cuestionarioId(\\d+)', sessionController.loginRequir
 router.delete('/cuestionarios/:cuestionarioId(\\d+)', sessionController.loginRequired, cuestionarioController.destroy);
 router.get('/cuestionarios/new',sessionController.loginRequired, cuestionarioController.new);
 router.post('/cuestionarios/create', sessionController.loginRequired, cuestionarioController.create);
-router.get('/cuestionarios/:cuestionarioId(\\d+)/preguntas',    sessionController.adminRequired, 	cuestionarioController.preguntas);
-router.get('/cuestionarios/:cuestionarioId(\\d+)/grupos',    sessionController.adminRequired, 	cuestionarioController.grupos);
+router.get('/cuestionarios/:cuestionarioId(\\d+)/preguntas',    sessionController.loginRequired, 	cuestionarioController.preguntas);
+router.get('/cuestionarios/:cuestionarioId(\\d+)/grupos',    sessionController.loginRequired, 	cuestionarioController.grupos);
 router.post('/cuestionarios/:cuestionarioId(\\d+)/duplicar', sessionController.loginRequired, cuestionarioController.duplicar);
 
 //Grupos

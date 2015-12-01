@@ -51,10 +51,21 @@ exports.update = function(req, res) {
 };
 
 //Borrar cuestionarios
-exports.destroy = function(req, res){
-	req.cuestionario.destroy().then(function(){
-        res.redirect('/admin/cuestionarios');
-    }).catch(function(error){next(error)});
+exports.destroy = function(req, res, next){
+    models.Quiz.findAll({
+        where : {
+                CuestionarioId : Number(req.cuestionario.id)		
+        }
+        }).then(
+            function(quizes){
+                for (var i = 0 ;i < quizes.length ; i++){
+                    quizes[i].destroy();
+                };
+                req.cuestionario.destroy().then(function(){
+                    res.redirect('/admin/cuestionarios');
+                }).catch(function(error){next(error)});
+        }).catch(function(error){next(error);})
+
 }
 // GET /cuestionarios/new
 exports.new = function(req, res) {
