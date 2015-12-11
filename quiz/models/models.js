@@ -35,9 +35,9 @@ Profesor.hasMany(Grupo);
 Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Cuestionario);
 
-CuestionarioAsignado.belongsTo(Cuestionario, Alumno);	
-Alumno.hasMany(CuestionarioAsignado);
-Cuestionario.hasMany(CuestionarioAsignado);
+//Tabla intermedia
+Grupo.belongsToMany(Cuestionario, {through: 'CuestionarioAsignado'});
+Cuestionario.belongsToMany(Grupo, {through: 'CuestionarioAsignado'});
 
 Alumno.belongsTo(Grupo);
 Grupo.hasMany(Alumno);
@@ -69,10 +69,10 @@ sequelize.sync().then(function() {
 	Quiz.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Quiz.create({ pregunta: 'Capital de Italia',
-					  respuesta: 'Roma'
+                                respuesta: 'Roma'
 		});
 		Quiz.create({ pregunta: 'Capital de Portugal',
-					  respuesta: 'Lisboa'
+                                respuesta: 'Lisboa'
 		})
 		.then(function(){console.log('Tabla Quiz inicializada')});
 		};
@@ -82,11 +82,12 @@ sequelize.sync().then(function() {
 	Alumno.count().then(function(count) {
             if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
-						apellido1: 'Pérez',
-						apellido2: 'López',
-						nombre: 'Juan',
-						email: 'Juan@gmail.com',
-						userId: 3
+                        apellido1: 'Pérez',
+                        apellido2: 'López',
+                        nombre: 'Juan',
+                        email: 'Juan@gmail.com',
+                        userId: 3,
+                        GrupoId: 1
 		});
             };
 	});

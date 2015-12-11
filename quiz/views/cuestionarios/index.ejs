@@ -4,7 +4,7 @@
 		<a href="/admin/cuestionarios/new"><button type="button">Crear cuestionario</button></a>
 	<%}%>
 </caption>
-<tr><td>Creador</td><td>Observaciones</td><td>Fecha</td><td colspan="2">Acciones</td></tr>
+<tr><td>Creador</td><td>Observaciones</td><td>Fecha</td><%if(session.profesor){%><td colspan="2">Alumno</td><%}%><td colspan="5">Acciones</td></tr>
 <% var i; for (i = 0 ;i < cuestionarios.length ; i++){ %>
     <tr>
 		<tr>
@@ -15,7 +15,11 @@
 </td>
         <td><%= cuestionarios[i].observaciones %></td>    
         <td><%= cuestionarios[i].fechaFin.toDateString() %></a></td>
-        <%if(session.user){%>
+        <%if(session.alumno){%>
+            <td><a href="/admin/cuestionarios/<%= cuestionarios[i].id %>/responder"><button>Responder</button></a></td>
+            <td><a href="/admin/cuestionarios/<%= cuestionarios[i].id %>/calificacion"><button>Calificacion</button></a></td>
+        <% } %>
+        <%if(session.profesor){%>
         <td><a href="/admin/cuestionarios/<%= cuestionarios[i].id %>/edit"><button>editar</button></a></td>
         <td><a href="/admin/cuestionarios/<%= cuestionarios[i].id %>/preguntas"><button>preguntas</button></a></td>
 	<td><a href="/admin/cuestionarios/<%= cuestionarios[i].id %>/grupos"><button>grupos</button></a></td>

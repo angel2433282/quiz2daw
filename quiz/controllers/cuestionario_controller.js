@@ -17,8 +17,18 @@ exports.load = function(req, res, next, cuestionarioId) {
 
 //  GET/cuestionarios VISTA DE LISTA CUESTIONARIOS
 exports.index = function(req, res) {
+    var condicion=null;
+    if(req.session.alumno)
+    {
+        models.Alumno.findById(Number(req.session.alumno.id)).then(function(alumno){
+            condicion = alumno.getGrupo();
+        });
+    }
 	models.Cuestionario.findAll({
-			include: [{ model: models.Profesor }]
+		include: [{ model: models.Profesor }],
+                where : {
+                        Grupo : condicion		
+                }                        
 		}).then(
                 function(cuestionarios) {
     res.render('cuestionarios/index.ejs', {cuestionarios: cuestionarios});
