@@ -25,10 +25,7 @@ exports.index = function(req, res) {
         });
     }
 	models.Cuestionario.findAll({
-		include: [{ model: models.Profesor }],
-                where : {
-                        Grupo : condicion		
-                }                        
+		include: [{ model: models.Profesor }]                   
 		}).then(
                 function(cuestionarios) {
     res.render('cuestionarios/index.ejs', {cuestionarios: cuestionarios});

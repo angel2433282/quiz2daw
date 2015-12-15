@@ -79,7 +79,19 @@ sequelize.sync().then(function() {
 	
 	});
         
-	Alumno.count().then(function(count) {
+        Grupo.count().then(function(count) {
+            if(count === 0) { // la tabla se inicializa solo si está vacía
+		Grupo.create({ anyo: '2014/15',
+                        grupo: '1�E.S.O.',
+                        subgrupo: 'A',
+                        ensenanza: 'E.S.O.',
+                        Curso: '1'
+		})
+		.then(function(){console.log('Tabla Grupos inicializada')});
+            };
+	});
+        
+        Alumno.count().then(function(count) {
             if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
                         apellido1: 'Pérez',
@@ -88,7 +100,8 @@ sequelize.sync().then(function() {
                         email: 'Juan@gmail.com',
                         userId: 3,
                         GrupoId: 1
-		});
+		})
+		.then(function(){console.log('Tabla Alumnos inicializada')});
             };
 	});
                 
@@ -112,6 +125,16 @@ sequelize.sync().then(function() {
 		})
 		.then(function(){console.log('Tabla Profesor inicializada')});
 		};
+	});
+        
+        Cuestionario.count().then(function(count) {
+            if(count === 0) { // la tabla se inicializa solo si está vacía
+		Cuestionario.create({ creador: '1',
+                        observaciones: 'Ejemplo de observacion',
+                        fechaFin: '12-10.2015'
+		})
+		.then(function(){console.log('Tabla Cuestionarios inicializada')});
+            };
 	});
 
 	Materia.count().then(function(count) {
